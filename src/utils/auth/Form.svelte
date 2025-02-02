@@ -53,3 +53,8 @@ async function credentialsUser(email: string, password: string) {
         <button on:click={() => credentialsUser(email, password)} class="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hover:bg-blue-700 cursor-pointer">Login</button>
     </div>
 </form>
+{#if errorMessage}
+    <div class="mt-4 p-3 bg-red-100 text-red-700 rounded-md" role="alert">
+        {errorMessage}
+    </div>
+{/if}
