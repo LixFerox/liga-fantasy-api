@@ -2,21 +2,38 @@
 import { getToken } from "./getToken";
 var email = '';
 var password = '';
+var errorMessage = '';
 
 async function credentialsUser(email: string, password: string) {
-    const token = await getToken(email, password);
-    const response= await fetch("/api/setCookie", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }),
+    try {
+        if (!email || !password) {
+            throw new Error('Por favor completa todos los campos');
+        }
+
+        const token = await getToken(email, password);
         
-    })
-    if(!response.ok){
-        throw new Error('Error al guardar sesión');
+        if (!token) {
+            throw new Error('Credenciales inválidas');
+        }
+
+        const response = await fetch("/api/setCookie", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al guardar sesión');
+        }
+
+        window.location.href = "/home";
+        
+    } catch (error) {
+        errorMessage = error instanceof Error ? error.message : 'Error desconocido';
+        console.error(error);
     }
-    window.location.href = "/home";
 }
 </script>
 <form on:submit={e => e.preventDefault()} class="w-full max-w-md">
