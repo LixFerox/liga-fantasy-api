@@ -1,22 +1,23 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import { seoOptions } from "../utils/seo/seoData";
+import { ClientRouter } from "astro:transitions";
+import Seo from "../utils/seo/Seo.astro";
+import "../styles/global.css";
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+interface Props {
+    page: string;
+}
+const { page } = Astro.props;
+---
+
+<!doctype html>
+<html lang={seoOptions.lang}>
+    <head>
+        <Seo page={page} />
+        <title>{`${seoOptions.nameWeb} - ${page}`}</title>
+        <ClientRouter />
+    </head>
+    <body class="grid min-h-screen grid-rows-[auto_1fr_auto]">
+        <slot />
+    </body>
+</html>

@@ -1,0 +1,23 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div
+    class="w-full max-w-4xl mt-6 flex flex-col sm:flex-row justify-between gap-4 px-4"
+>
+    <button
+        class="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-sky-400 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 transform-gpu disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-md disabled:cursor-not-allowed border border-white/20 cursor-pointer"
+        aria-label="Página anterior"
+    >
+        <Icon name="tabler:chevron-left" class="w-5 h-5" />
+        Anterior
+    </button>
+
+    <button
+        class="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-sky-400 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 transform-gpu disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-md disabled:cursor-not-allowed border border-white/20 cursor-pointer"
+        aria-label="Página siguiente"
+    >
+        Siguiente
+        <Icon name="tabler:chevron-right" class="w-5 h-5" />
+    </button>
+</div>

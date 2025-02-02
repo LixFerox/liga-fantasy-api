@@ -1,0 +1,26 @@
+---
+import { seoOptions } from "./seoData";
+interface Props {
+    page: string;
+}
+const { page } = Astro.props;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+<meta name="robots" content="index, follow" />
+<meta name="description" content={seoOptions.description} />
+<meta name="author" content={seoOptions.author} />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="icon" type="image/svg+xml" href={seoOptions.favicon} />
+<meta property="og:url" content={seoOptions.url} />
+<meta property="og:type" content="website" />
+<meta property="og:title" content={`${seoOptions.nameWeb} - ${page}`} />
+<meta property="og:description" content={seoOptions.description} />
+<meta property="og:image" content={seoOptions.favicon} />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:domain" content={seoOptions.domain} />
+<meta property="twitter:url" content={seoOptions.url} />
+<meta property="twitter:title" content={`${seoOptions.nameWeb} - ${page}`} />
+<meta property="twitter:description" content={seoOptions.description} />

@@ -1,0 +1,18 @@
+---
+import Year from "../components/Year.svelte";
+import { seoOptions } from "../utils/seo/seoData";
+---
+
+<footer
+    class="w-full h-16 flex sm:flex-row flex-col justify-center items-center gap-2 bg-blue-400"
+>
+    <p class="sm:text-base text-sm">
+        &copy;
+        <Year client:load />
+        <a href="/home" class="font-medium hover:underline"
+            >{seoOptions.nameWeb}</a
+        >
+    </p>
+    <span class="sm:flex hidden">|</span>
+    <p class="sm:text-base text-sm">Todos los derechos reservados</p>
+</footer>

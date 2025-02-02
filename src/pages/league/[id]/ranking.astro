@@ -1,0 +1,71 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header.astro";
+import Main from "../../../layouts/Main.astro";
+import Footer from "../../../components/Footer.astro";
+import TableRank from "../../../components/TableRank.astro";
+import type { Manager } from "../../../utils/interfaces/index";
+import { rankingRequest } from "../../../utils/request/index";
+
+const cookie = Astro.cookies.get("auth-token")!!.value;
+const { id } = Astro.params;
+const rankingManagers = await rankingRequest(cookie, id!!);
+
+const page = `Clasificación `;
+---
+
+<Layout page={page}>
+    <Header />
+    <Main>
+        <div class="sm:w-10/12 w-full h-full flex flex-col items-center py-4">
+            <h1 class="sm:text-4xl text-2xl font-bold text-gray-800">
+                {page}
+            </h1>
+            <article
+                class="w-full flex flex-col justify-center items-center gap-6 pt-4 py-6"
+            >
+                <div
+                    class="w-full bg-white rounded-xl shadow-lg overflow-hidden"
+                >
+                    <div
+                        class="grid grid-cols-4 gap-4 bg-gray-800 p-5 rounded-t-xl"
+                    >
+                        <div
+                            class="font-semibold text-gray-200 sm:text-base text-sm uppercase"
+                        >
+                            Posición
+                        </div>
+                        <div
+                            class="font-semibold text-gray-200 sm:text-base text-sm uppercase"
+                        >
+                            Jugador
+                        </div>
+                        <div
+                            class="font-semibold text-gray-200 sm:text-base text-sm uppercase text-center"
+                        >
+                            Puntos
+                        </div>
+                        <div
+                            class="font-semibold text-gray-200 sm:text-base text-sm uppercase text-right"
+                        >
+                            Valor del Equipo
+                        </div>
+                    </div>
+                    <div class="divide-y divide-gray-100">
+                        {
+                            rankingManagers.map((manager: Manager) => (
+                                <TableRank
+                                    position={manager.position}
+                                    name={manager.team.manager.managerName}
+                                    points={manager.points}
+                                    teamValue={manager.team.teamValue}
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
+            </article>
+        </div>
+    </Main>
+</Layout>
+<Footer />

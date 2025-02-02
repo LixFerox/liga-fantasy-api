@@ -1,0 +1,26 @@
+---
+import LastTime from "./LastTime.svelte";
+interface Props {
+    title: string;
+    publicationDate: string;
+    msg: string;
+}
+const { title, publicationDate, msg } = Astro.props;
+---
+
+<section
+    class="w-full flex flex-col p-6 md:p-8 space-y-6 bg-gradient-to-r from-blue-100 to-blue-200 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 transform-gpu hover:scale-[1.005] border border-white/20"
+>
+    <div class="border-b border-gray-300/20 pb-4">
+        <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight mb-2.5">
+            {title}
+        </h2>
+        <LastTime
+            time={publicationDate}
+            className="text-gray-600/90 text-xs font-semibold uppercase tracking-wide"
+        />
+    </div>
+    <div class="prose prose-base max-w-none text-gray-800">
+        <p class="leading-relaxed">{msg}</p>
+    </div>
+</section>

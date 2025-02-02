@@ -1,0 +1,39 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Main from "../layouts/Main.astro";
+import Footer from "../components/Footer.astro";
+import SectionLeague from "../components/SectionLeague.astro";
+import type { League } from "../utils/interfaces/index";
+import { leaguesRequest } from "../utils/request/index";
+const cookie = Astro.cookies.get("auth-token")!!.value;
+const leagues = await leaguesRequest(cookie);
+const page = "Tus Ligas Fantasy";
+---
+
+<Layout page={page}>
+    <Header />
+    <Main>
+        <div class="sm:w-10/12 w-full h-full flex flex-col items-center py-4">
+            <h1 class="sm:text-4xl text-2xl font-bold text-gray-800">
+                {page}
+            </h1>
+            <article
+                class="w-full grid grid-cols-1 sd:grid-cols-2 lg:grid-cols-3 gap-6 pt-4"
+            >
+                {
+                    leagues.map((league: League) => (
+                        <SectionLeague
+                            title={league.name}
+                            url={`/league/${league.id}`}
+                            members={league.managersNumber}
+                            description={league.description}
+                            button="Acceder a la Liga"
+                        />
+                    ))
+                }
+            </article>
+        </div>
+    </Main>
+</Layout>
+<Footer />

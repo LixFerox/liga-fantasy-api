@@ -1,0 +1,43 @@
+---
+interface Props {
+    position: number;
+    name: string;
+    points: number;
+    teamValue: number;
+}
+const { position, name, points, teamValue } = Astro.props;
+---
+
+<a
+    href="#"
+    class="block transition-all duration-200 hover:bg-gray-50 hover:shadow-sm group"
+>
+    <div class="grid grid-cols-4 gap-4 p-5 items-center">
+        <div class="flex items-center">
+            <span
+                class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-800 sm:text-base text-sm font-medium"
+            >
+                #{position}
+            </span>
+        </div>
+        <div class="flex items-center space-x-3">
+            <span
+                class="font-medium text-gray-900 group-hover:text-blue-600 sm:text-base text-sm transition-colors"
+            >
+                {name}
+            </span>
+        </div>
+        <div class="text-center">
+            <span
+                class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-800 sm:text-base text-sm font-medium"
+            >
+                {points.toLocaleString("es-ES")}
+            </span>
+        </div>
+        <div class="text-right">
+            <span class="font-semibold sm:text-base text-sm text-gray-900">
+                {teamValue.toLocaleString("es-ES")}€
+            </span>
+        </div>
+    </div>
+</a>

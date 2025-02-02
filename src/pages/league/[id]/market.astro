@@ -1,0 +1,49 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header.astro";
+import Main from "../../../layouts/Main.astro";
+import Footer from "../../../components/Footer.astro";
+import SectionMarket from "../../../components/SectionMarket.astro";
+import type { Market } from "../../../utils/interfaces/index";
+import { marketRequest } from "../../../utils/request/index";
+
+const cookie = Astro.cookies.get("auth-token")!!.value;
+const { id } = Astro.params;
+const marketPlayers = await marketRequest(cookie, id!!);
+const page = `Mercado`;
+---
+
+<Layout page={page}>
+    <Header />
+    <Main>
+        <div class="sm:w-10/12 w-full h-full flex flex-col items-center py-4">
+            <h1 class="sm:text-4xl text-2xl font-bold text-gray-800">
+                {page}
+            </h1>
+            <article
+                class="w-full flex flex-col justify-center items-center gap-6 mt-4 py-6"
+            >
+                {
+                    marketPlayers.map((players: Market) => (
+                        <SectionMarket
+                            image={
+                                players.playerMaster.images.transparent[
+                                    "256x256"
+                                ]
+                            }
+                            name={players.playerMaster.nickname}
+                            position={players.playerMaster.position}
+                            points={players.playerMaster.points}
+                            status={players.playerMaster.playerStatus}
+                            expiration={players.expirationDate}
+                            bids={players.numberOfBids}
+                            marketValue={players.playerMaster.marketValue}
+                            salePrice={players.salePrice}
+                        />
+                    ))
+                }
+            </article>
+        </div>
+    </Main>
+</Layout>
+<Footer />

@@ -1,0 +1,35 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    title: string;
+    url: string;
+    members: number;
+    description: string;
+    button: string;
+}
+const { title, url, members, description, button } = Astro.props;
+---
+
+<section
+    class="flex flex-col items-center justify-center text-center p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border bg-white border-gray-100 hover:border-blue-100"
+>
+    <h2 class="text-2xl font-bold mb-3 text-gray-900">{title}</h2>
+    <div class="flex items-center gap-2 mb-4 text-gray-600">
+        <Icon name="tabler:user" class="w-6 h-6 text-blue-600" />
+        <span class="text-sm font-medium">
+            Miembros:
+            <span class="text-blue-600">{members}</span>
+            /16
+        </span>
+    </div>
+    <p class="mb-6 leading-relaxed line-clamp-3 max-w-prose text-gray-600">
+        {description}
+    </p>
+    <a
+        href={url}
+        class="w-full md:w-auto px-6 py-3 rounded-lg transition-all hover:from-blue-700 hover:to-blue-800 hover:shadow-md focus:outline-none focus:ring-blue-600 focus:ring-ring-offset-2 text-white font-semibold bg-gradient-to-br from-blue-600 to-blue-700"
+    >
+        {button}
+    </a>
+</section>

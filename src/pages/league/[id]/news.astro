@@ -1,0 +1,42 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header.astro";
+import Main from "../../../layouts/Main.astro";
+import Footer from "../../../components/Footer.astro";
+import MenuDirections from "../../../components/MenuDirections.astro";
+import type { Activity } from "../../../utils/interfaces/index";
+import { activityRequest } from "../../../utils/request/index";
+import NewsList from "../../../components/NewsList.astro";
+
+const cookie = Astro.cookies.get("auth-token")!!.value;
+const { id } = Astro.params;
+const indexPage = 1;
+const news = await activityRequest(cookie, id!!, indexPage);
+const page = `Actividad`;
+---
+
+<Layout page={page}>
+    <Header />
+    <Main>
+        <div class="sm:w-10/12 w-full h-full flex flex-col items-center py-4">
+            <h1 class="sm:text-4xl text-2xl font-bold text-gray-800">
+                {page}
+            </h1>
+            <article
+                class="w-full flex flex-col justify-center items-center gap-6 pt-4 py-6"
+            >
+                <MenuDirections />
+                {
+                    news.map((activity: Activity) => (
+                        <NewsList
+                            title={activity.title}
+                            publicationDate={activity.publicationDate}
+                            msg={activity.msg}
+                        />
+                    ))
+                }
+            </article>
+        </div>
+    </Main>
+</Layout>
+<Footer />

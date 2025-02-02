@@ -1,0 +1,66 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header.astro";
+import Main from "../../../layouts/Main.astro";
+import Footer from "../../../components/Footer.astro";
+import SectionMenu from "../../../components/SectionMenu.astro";
+import type { League } from "../../../utils/interfaces/index";
+import { leaguesRequest } from "../../../utils/request/index";
+const cookie = Astro.cookies.get("auth-token")!!.value;
+const leagues = await leaguesRequest(cookie);
+const { id } = Astro.params;
+const league = leagues.find((league: League) => String(league.id) === id);
+
+const menuItems = [
+    {
+        icon: "tabler:trophy",
+        title: "Clasificación",
+        url: `${id}/ranking`,
+        description: "Explora la clasifiación de tu liga",
+        button: "Ver clasificación",
+    },
+    {
+        icon: "tabler:shopping-cart",
+        title: "Mercado",
+        url: `${id}/market`,
+        description: "Explora los jugadores que están en venta",
+        button: "Ver mercado",
+    },
+    {
+        icon: "tabler:pig-money",
+        title: "Actividad",
+        url: `${id}/news`,
+        description: "Explora la actividad del mercado",
+        button: "Ver actividad",
+    },
+];
+const page = `${league.name}`;
+---
+
+<Layout page={page}>
+    <Header />
+    <Main>
+        <div class="sm:w-10/12 w-full h-full flex flex-col items-center py-4">
+            <h1 class="sm:text-4xl text-2xl font-bold text-gray-800">
+                Liga
+                <span class="italic">{page}</span>
+            </h1>
+            <article
+                class="w-full grid grid-cols-1 sd:grid-cols-2 lg:grid-cols-3 gap-6 pt-4"
+            >
+                {
+                    menuItems.map((menu) => (
+                        <SectionMenu
+                            icon={menu.icon}
+                            title={menu.title}
+                            url={menu.url}
+                            description={menu.description}
+                            button={menu.button}
+                        />
+                    ))
+                }
+            </article>
+        </div>
+    </Main>
+</Layout>
+<Footer />
