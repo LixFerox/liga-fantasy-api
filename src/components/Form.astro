@@ -1,0 +1,31 @@
+---
+import { actions } from "astro:actions";
+---
+
+<form method="post" action={actions.AuthUser} class="w-full flex flex-col">
+  <div class="flex flex-col gap-2">
+    <label class="text-gray-600 font-semibold">Email</label>
+    <input
+      name="email"
+      type="email"
+      class="py-2 px-3 rounded-lg outline-none border border-gray-300 text-gray-500 font-medium"
+    />
+  </div>
+  <div class="flex flex-col gap-2 mt-4">
+    <label class="text-gray-600 font-semibold">Contraseña</label>
+    <input
+      name="password"
+      type="password"
+      class="py-2 px-3 rounded-lg outline-none border border-gray-300 text-gray-500 font-medium"
+    />
+  </div>
+  <button
+    class="bg-icon py-3 rounded-lg text-white font-semibold mt-8 mb-4 cursor-pointer hover:brightness-90 transition-all"
+    >Iniciar sesión</button
+  >
+  <div class="flex items-center justify-between text-gray-500">
+    <hr class="flex-1 border-gray-300" />
+    <span class="mx-2">O continúa con </span>
+    <hr class="flex-1 border-gray-300" />
+  </div>
+</form>

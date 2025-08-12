@@ -1,0 +1,76 @@
+---
+import Layout from "~/layouts/Layout.astro";
+import { getLeagues, getMarket } from "~/lib/api/leagues";
+import MenuLeague from "~/components/MenuLeague.astro";
+import MarketCard from "~/components/MarketCard.astro";
+import type { League } from "~/lib/types/league/league";
+import type { Market } from "~/lib/types/market/market";
+import { clearAuthCookie, isAuthError } from "~/lib/auth/utils";
+
+const cookie = Astro.cookies.get("auth");
+if (!cookie) {
+  return Astro.redirect("/");
+}
+const { id } = Astro.params;
+
+let league: League | undefined;
+let market: Market[] = [];
+
+try {
+  const leagues = await getLeagues(cookie.value);
+  league = leagues.find((league: League) => league.id === id);
+
+  if (!league) {
+    return Astro.redirect("/404");
+  }
+
+  market = await getMarket(league.id, cookie.value);
+} catch (error) {
+  if (isAuthError(error)) {
+    clearAuthCookie(Astro.cookies);
+    return Astro.redirect("/");
+  }
+  throw error;
+}
+---
+
+<Layout title={league?.name}>
+  <main
+    class="py-6 flex flex-col items-center from-green-50/50 to-green-50 bg-gradient-to-b"
+  >
+    <div class="w-full max-w-7xl flex flex-col items-center px-4">
+      <h2 class="text-2xl font-bold text-gray-800">{league?.name}</h2>
+      <MenuLeague leagueId={id!} />
+      <article
+        class="w-full shadow-md border border-gray-200 bg-white rounded-lg p-6"
+      >
+        <h3 class="text-lg font-medium">Clasificación general</h3>
+        <p class="text-gray-600">
+          Posiciones actuales de todos los equipos en la liga
+        </p>
+        <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+          {
+            market.map(
+              ({ salePrice, expirationDate, playerMaster, numberOfBids }) => (
+                <MarketCard
+                  playerImage={playerMaster.images.transparent["256x256"]}
+                  playerName={playerMaster.name}
+                  teamImage={playerMaster.team.badgeColor}
+                  teamName={playerMaster.team.shortName}
+                  position={playerMaster.position}
+                  marketValue={playerMaster.marketValue}
+                  salePrice={salePrice}
+                  points={playerMaster.points}
+                  playerStatus={playerMaster.playerStatus}
+                  expirationDate={expirationDate}
+                  numberOfBids={numberOfBids}
+                  lastSeasonPoints={playerMaster.lastSeasonPoints}
+                />
+              )
+            )
+          }
+        </div>
+      </article>
+    </div>
+  </main>
+</Layout>

@@ -1,11 +1,54 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { Icon } from "astro-icon/components";
+import Layout from "~/layouts/Layout.astro";
+import Form from "~/components/Form.astro";
+import GoogleAuth from "~/components/GoogleAuth.astro";
+import { actions } from "astro:actions";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const cookie = Astro.cookies.get("auth");
+
+if (cookie) {
+  return Astro.redirect("/home");
+}
+
+const auth = Astro.getActionResult(actions.AuthUser);
+if (auth && !auth.error && auth.data.token) {
+  Astro.cookies.set("auth", auth.data.token, {
+    path: "/",
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+  return Astro.redirect("/home");
+}
 ---
 
-<Layout>
-	<Welcome />
+<Layout menuHidden title="Iniciar sesión">
+  <main
+    class="py-6 flex flex-col items-center from-green-50/50 to-green-50 bg-gradient-to-b"
+  >
+    <div
+      class="w-full max-w-xl flex flex-col items-center bg-white rounded-xl drop-shadow-2xl py-8 lg:px-12 px-4"
+    >
+      <picture class="bg-icon p-3 rounded-full text-white w-fit">
+        <Icon name="picon:football" class="size-9" />
+      </picture>
+      <h1 class="py-6 font-bold text-2xl">Bienvenido de vuelta</h1>
+      <p class="pb-12 font-medium text-gray-600">
+        Inicia sesión para acceder a tu Liga Fantasy
+      </p>
+
+      {
+        auth && auth.error && (
+          <div class="w-full mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+            Error de autenticación. Verifica tus credenciales.
+          </div>
+        )
+      }
+
+      <Form />
+      <GoogleAuth />
+    </div>
+  </main>
 </Layout>

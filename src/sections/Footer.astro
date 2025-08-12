@@ -1,0 +1,17 @@
+---
+import { Temporal } from "temporal-polyfill";
+
+const currentYear = Temporal.Now.plainDateTimeISO().year;
+---
+
+<footer class="bg-white border-t border-gray-200 shadow-md">
+  <div class="max-w-7xl mx-auto text-center py-4 lg:text-base text-sm">
+    <p class="text-gray-600">
+      &copy; {currentYear}
+      <span class="font-semibold"> Fantasy Stats</span> | Hecho con ❤️ por <a
+        class="hover:underline text-icon font-semibold"
+        href="https://github.com/LixFerox/">LixFerox</a
+      >
+    </p>
+  </div>
+</footer>

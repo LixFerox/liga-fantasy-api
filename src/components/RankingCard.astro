@@ -1,0 +1,71 @@
+---
+import numeral from "numeral";
+import { Icon } from "astro-icon/components";
+const {
+  position,
+  manager,
+  avatar,
+  points,
+  teamValue,
+  previousPosition,
+  isAdmin,
+} = Astro.props;
+
+const isDecreased = position < previousPosition;
+---
+
+<section class="py-2 border-b text-center border-gray-200">
+  <div class="grid lg:grid-cols-5 grid-cols-3">
+    <div
+      class="lg:justify-self-center justify-self-start flex flex-col items-center justify-center"
+    >
+      <p class="w-fit aspect-square rounded-full p-1 font-medium bg-gray-200">
+        {position}
+      </p>
+    </div>
+    <div class="justify-self-center flex items-center justify-center gap-4">
+      <img
+        src={avatar}
+        alt={`Avatar de ${manager}`}
+        class="size-8 rounded-full aspect-square object-cover"
+      />
+      <p class="font-medium">{manager}</p>
+      {
+        isAdmin ? (
+          <div class="lg:text-sm text-xs bg-gray-200 rounded-full py-1 px-2">
+            <p>Admin</p>
+          </div>
+        ) : null
+      }
+    </div>
+    <p class="font-medium lg:block hidden">{points}</p>
+    <p class="lg:block hidden">
+      {`${numeral(teamValue).format("0.0a").toUpperCase()}€ `}
+    </p>
+    {
+      isDecreased ? (
+        <div class="lg:justify-self-center justify-self-end flex items-center justify-center gap-2">
+          <Icon name="mdi:arrow-down" class="text-red-500" />
+          <p class="text-red-500">{Math.abs(previousPosition - position)}</p>
+        </div>
+      ) : (
+        <div class="lg:justify-self-center justify-self-end flex items-center justify-center gap-2">
+          <Icon name="mdi:arrow-up" class="text-green-500" />
+          <p class="text-green-500">{position - previousPosition}</p>
+        </div>
+      )
+    }
+  </div>
+  <div class="lg:hidden flex justify-between items-center mt-5">
+    <div class="flex-1 text-start">
+      <p class="text-gray-500 mb-1">PUNTOS</p>
+      <p class="font-semibold">{points}</p>
+    </div>
+    <div class="flex-1 text-end">
+      <p class="text-gray-500 mb-1">VALOR</p>
+      <p class="font-semibold text-green-600">
+        {`${numeral(teamValue).format("0.0a").toUpperCase()}€ `}
+      </p>
+    </div>
+  </div>
+</section>

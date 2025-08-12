@@ -1,0 +1,103 @@
+---
+import { undefined } from "astro:schema";
+import numeral from "numeral";
+import CountDown from "./CountDown";
+
+const {
+  playerImage,
+  playerName,
+  teamImage,
+  teamName,
+  position,
+  marketValue,
+  salePrice,
+  points,
+  playerStatus,
+  expirationDate,
+  numberOfBids,
+  lastSeasonPoints,
+} = Astro.props;
+---
+
+<section
+  class="flex flex-col items-center bg-white rounded-lg shadow-md p-4 mb-4"
+>
+  <div class="w-full flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <img
+        src={playerImage}
+        alt={`Imagen del jugador ${playerName}`}
+        class="size-20 aspect-square object-cover rounded-full border border-gray-200"
+      />
+      <p>{playerName}</p>
+    </div>
+    <div>
+      <div class="flex items-center gap-2">
+        <div class="rounded-lg border border-gray-200 p-1">
+          <img
+            src={teamImage}
+            alt={`Imagen del equipo ${teamName}`}
+            class="size-10 aspect-square object-cover"
+          />
+        </div>
+        <div class="flex flex-col items-center">
+          <p>{teamName}</p>
+
+          <div
+            class="items-center border border-gray-200 rounded-xl py-1 px-2 mt-2 w-fit"
+          >
+            <p class="text-xs text-gray-500">
+              {position.substring(0, 3).toUpperCase()}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="w-full flex items-center justify-between mt-4">
+    <div class="flex flex-col items-center bg-gray-200 p-2 rounded-lg">
+      <p class="text-xs text-gray-500">VALOR MERCADO</p>
+      <p class="text-sm font-medium">
+        {`${numeral(marketValue).format("0.0a").toUpperCase()}€`}
+      </p>
+    </div>
+    <div class="flex flex-col items-center bg-green-200 p-2 rounded-lg">
+      <p class="text-xs text-gray-500">PRECIO VENTA</p>
+      <p class="text-sm font-medium text-green-800">
+        {`${numeral(salePrice).format("0.0a").toUpperCase()}€`}
+      </p>
+    </div>
+  </div>
+  <div class="w-full flex items-center justify-between mt-4">
+    <div class="flex flex-col items-center">
+      <p class="text-xs text-gray-500">PUNTOS</p>
+      <p class="text-sm font-medium">{points}</p>
+    </div>
+    <div class="flex flex-col items-center">
+      <p class="text-xs text-gray-500">PUJAS</p>
+      <p class="text-sm font-medium">{numberOfBids}</p>
+    </div>
+    <div class="flex flex-col items-center">
+      <p class="text-xs text-gray-500">TEMP. ANT.</p>
+      <p class="text-sm font-medium">
+        {lastSeasonPoints === undefined ? "No disponible" : lastSeasonPoints}
+      </p>
+    </div>
+  </div>
+  <div class="w-full flex items-center justify-between mt-4">
+    <div
+      class={`py-1 px-2 rounded-lg ${playerStatus === "ok" ? "bg-green-200" : playerStatus === "doubtful" ? "bg-yellow-200" : "bg-red-200"}`}
+    >
+      <p class="text-xs font-medium">
+        {
+          playerStatus === "ok"
+            ? "Alineable"
+            : playerStatus === "doubtful"
+              ? "Dudoso"
+              : "No disponible"
+        }
+      </p>
+    </div>
+    <CountDown endTime={"2025-08-12T18:41:00+02:00"} client:load />
+  </div>
+</section>

@@ -1,46 +1,48 @@
-# Astro Starter Kit: Basics
+# Fantasy Stats
 
-```sh
-pnpm create astro@latest -- --template basics
+Fantasy Stats es una aplicación web que te permite ver información de tu liga de la App Liga Fantasy Relevo.
+
+## Características
+
+- Visualización de la clasificación de la liga.
+- Información detallada sobre el mercado de jugadores.
+- Autenticación de usuarios.
+- Diseño responsivo y moderno.
+
+## Tecnologías Utilizadas
+
+- [Astro](https://astro.build/)
+- [React](https://es.react.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Node.js](https://nodejs.org/)
+- [Temporal Polyfill](https://github.com/tc39/proposal-temporal)
+- [Astro Icon](https://github.com/natemoo-re/astro-icon)
+- [Iconify](https://iconify.design/)
+
+## Instalación
+
+1. Clona el repositorio:
+
+   ```bash
+   git clone --depth 1 git@github.com:LixFerox/liga-fantasy-api.git
+   ```
+
+2. Navega al directorio del proyecto:
+
+   ```bash
+   cd liga-fantasy-api
+   ```
+
+3. Instala las dependencias:
+
+   ```bash
+   pnpm i
+   ```
+
+## Uso
+
+Para iniciar el proyecto en modo de desarrollo, ejecuta:
+
+```bash
+pnpm dev
 ```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

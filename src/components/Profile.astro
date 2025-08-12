@@ -1,0 +1,14 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div id="user-profile" class="bg-icon p-2 rounded-full cursor-pointer">
+  <Icon name="mdi:user" class="size-8 text-white" />
+</div>
+
+<script>
+  const profileElement = document.querySelector("#user-profile");
+  profileElement?.addEventListener("click", () => {
+    window.location.href = "/logout";
+  });
+</script>
